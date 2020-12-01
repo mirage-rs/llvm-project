@@ -59,6 +59,8 @@ public:
   bool hasSCP() const { return HasSCP; }
 
 private:
+  virtual void anchor();
+
   // Subtarget feature settings
   // See Falcon.td for details.
   bool HasSCP;

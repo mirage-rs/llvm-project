@@ -27,6 +27,9 @@
 
 namespace llvm {
 
+// Pin the VTable to this file.
+void FalconSubtarget::anchor() {}
+
 FalconSubtarget::FalconSubtarget(const Triple &TT, const std::string &CPU,
                                  const std::string &FS, const TargetMachine &TM)
     : FalconGenSubtargetInfo(TT, CPU, FS),
