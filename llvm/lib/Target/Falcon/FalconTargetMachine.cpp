@@ -14,12 +14,12 @@
 #include "FalconTargetMachine.h"
 
 #include "llvm/CodeGen/Passes.h"
+#include "llvm/CodeGen/TargetLoweringObjectFileImpl.h"
 #include "llvm/CodeGen/TargetPassConfig.h"
 #include "llvm/IR/LegacyPassManager.h"
 #include "llvm/Support/TargetRegistry.h"
 
 #include "Falcon.h"
-#include "FalconTargetObjectFile.h"
 #include "TargetInfo/FalconTargetInfo.h"
 
 namespace llvm {
@@ -43,12 +43,13 @@ FalconTargetMachine::FalconTargetMachine(const Target &T, const Triple &TT,
                                          CodeGenOpt::Level OL, bool JIT)
     : LLVMTargetMachine(T, FalconDataLayout, TT, CPU, FS, Options,
                         getEffectiveRelocModel(RM), CM, OL),
-      TLOF(std::make_unique<FalconTargetObjectFile>()),
+      TLOF(std::make_unique<TargetLoweringObjectFileELF>()),
       SubTarget(TT, CPU, FS, *this) {
   initAsmInfo();
 }
 
 namespace {
+
 /// Falcon Code Generator Pass Configuration Options.
 class FalconPassConfig : public TargetPassConfig {
 public:
@@ -61,6 +62,7 @@ public:
 
   bool addInstSelector() override;
 };
+
 } // end namespace
 
 TargetPassConfig *FalconTargetMachine::createPassConfig(PassManagerBase &PM) {
