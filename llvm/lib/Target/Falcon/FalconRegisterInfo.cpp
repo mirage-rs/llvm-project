@@ -31,6 +31,17 @@ namespace llvm {
 
 FalconRegisterInfo::FalconRegisterInfo() : FalconGenRegisterInfo(Falcon::PC) {}
 
+const MCPhysReg *
+FalconRegisterInfo::getCalleeSavedRegs(const MachineFunction *MF) const {
+  return CSR_SaveList;
+}
+
+const uint32_t *
+FalconRegisterInfo::getCallPreservedMask(const MachineFunction &MF,
+                                         CallingConv::ID CC) const {
+  return CSR_RegMask;
+}
+
 BitVector FalconRegisterInfo::getReservedRegs(const MachineFunction &MF) const {
   BitVector Reserved(getNumRegs());
   const TargetFrameLowering *TFI = MF.getSubtarget().getFrameLowering();

@@ -26,6 +26,10 @@ class FalconRegisterInfo : public FalconGenRegisterInfo {
 public:
   FalconRegisterInfo();
 
+  /// Code Generation Methods
+  const MCPhysReg *getCalleeSavedRegs(const MachineFunction *MF) const override;
+  const uint32_t *getCallPreservedMask(const MachineFunction &MF,
+                                       CallingConv::ID CC) const override;
   BitVector getReservedRegs(const MachineFunction &MF) const override;
 
   /// Stack Frame Processing Methods
