@@ -10,3 +10,29 @@
 // This file contains the Falcon implementation of the TargetRegisterInfo class.
 //
 //===----------------------------------------------------------------------===//
+
+#ifndef LLVM_TARGET_FALCON_REGISTER_INFO_H
+#define LLVM_TARGET_FALCON_REGISTER_INFO_H
+
+#include "llvm/CodeGen/TargetRegisterInfo.h"
+
+#define GET_REGINFO_HEADER
+#include "FalconGenRegisterInfo.inc"
+
+namespace llvm {
+
+/// Utilities relating to Falcon registers.
+class FalconRegisterInfo : public FalconGenRegisterInfo {
+public:
+  FalconRegisterInfo();
+
+  /// Stack Frame Processing Methods
+  void eliminateFrameIndex(MachineBasicBlock::iterator MI, int SPAdj,
+                           unsigned FIOperandNum,
+                           RegScavenger *RS) const override;
+  Register getFrameRegister(const MachineFunction &MF) const override;
+};
+
+} // end namespace llvm
+
+#endif // LLVM_TARGET_FALCON_REGISTER_INFO_H

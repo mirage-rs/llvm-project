@@ -105,7 +105,7 @@ def SEC1 : FalconSpr<13, "sec1">, DwarfRegNum<[29]>;
 // Unknown. Officially marked as "RESERVED".
 def IMB1 : FalconSpr<14, "imb1">, DwarfRegNum<[30]>;
 // Unknown. Officially marked as "RESERVED".
-def DMB1 : FalconSpr<15, "dmb1">, DwarfRegNum<[31]>,
+def DMB1 : FalconSpr<15, "dmb1">, DwarfRegNum<[31]>;
 
 //===----------------------------------------------------------------------===//
 // Register Classes
