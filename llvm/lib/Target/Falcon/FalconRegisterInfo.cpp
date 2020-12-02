@@ -31,6 +31,40 @@ namespace llvm {
 
 FalconRegisterInfo::FalconRegisterInfo() : FalconGenRegisterInfo(Falcon::PC) {}
 
+BitVector FalconRegisterInfo::getReservedRegs(const MachineFunction &MF) const {
+  BitVector Reserved(getNumRegs());
+  const TargetFrameLowering *TFI = MF.getSubtarget().getFrameLowering();
+
+  // If a dedicated Frame Pointer is being used, reserve it here. Otherwise,
+  // we can alternatively wait for the Stack Pointer to be reserved later on.
+  if (TFI->hasFP(MF)) {
+    Reserved.set(Falcon::R0);
+    Reserved.set(Falcon::R0H);
+    Reserved.set(Falcon::R0B);
+  }
+
+  // Reserve all the Falcon special-purpose registers. We don't want these
+  // to be allocated at any point because they serve a different purpose.
+  Reserved.set(Falcon::IV0);
+  Reserved.set(Falcon::IV1);
+  Reserved.set(Falcon::IV2);
+  Reserved.set(Falcon::EV);
+  Reserved.set(Falcon::SP);
+  Reserved.set(Falcon::PC);
+  Reserved.set(Falcon::IMB);
+  Reserved.set(Falcon::DMB);
+  Reserved.set(Falcon::CSW);
+  Reserved.set(Falcon::CCR);
+  Reserved.set(Falcon::SCP);
+  Reserved.set(Falcon::CTX);
+  Reserved.set(Falcon::EXCI);
+  Reserved.set(Falcon::SEC1);
+  Reserved.set(Falcon::IMB1);
+  Reserved.set(Falcon::DMB1);
+
+  return Reserved;
+}
+
 void FalconRegisterInfo::eliminateFrameIndex(MachineBasicBlock::iterator MI,
                                              int SPAdj, unsigned FIOperandNum,
                                              RegScavenger *RS) const {
