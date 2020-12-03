@@ -19,6 +19,8 @@
 #include "llvm/MC/MCInst.h"
 #include "llvm/Support/ErrorHandling.h"
 
+#include "MCTargetDesc/FalconMCExpr.h"
+
 namespace llvm {
 
 FalconMCInstLower::FalconMCInstLower(MCContext &Ctx, AsmPrinter &Printer)
