@@ -71,7 +71,8 @@ void FalconMCInstLower::lowerInstruction(const MachineInstr &MI,
 
 MCOperand FalconMCInstLower::lowerSymbolOperand(const MachineOperand &MO,
                                                 MCSymbol *Sym) const {
-  unsigned char TF = MO.getTargetFlags();
+  FalconMCExpr::VariantKind Kind =
+      reinterpret_cast<FalconMCExpr::VariantKind>(MO.getTargetFlags());
   const MCExpr *Expr = MCSymbolRefExpr::create(Sym, Ctx);
 
   if (!MO.isJTI() && MO.getOffset()) {
@@ -80,8 +81,11 @@ MCOperand FalconMCInstLower::lowerSymbolOperand(const MachineOperand &MO,
   }
 
   // TODO: Generate proper expressions.
+  if (Kind != FalconMCExpr::VK_Falcon_None)
+    Expr = FalconMCExpr::create(Kind, Expr, Ctx);
 
   return MCOperand::createExpr(Expr);
 }
 
 } // end namespace llvm
+0

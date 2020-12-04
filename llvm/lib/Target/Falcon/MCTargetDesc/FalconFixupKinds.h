@@ -25,6 +25,10 @@ namespace Falcon {
 ///       MCFixupKindInfo Infos[Falcon::NumTargetFixupKinds]
 ///       in `FalconAsmBackend.cpp`.
 enum Fixups {
+  /// An unsigned 8-bit Falcon fixup.
+  ///
+  /// These are used for bit positions, shifts and 8-bit-sized instructions.
+  fixup_u8 = FirstTargetFixupKind,
 
   // Marker
   LastTargetFixupKind,

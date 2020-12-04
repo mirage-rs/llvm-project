@@ -9,4 +9,19 @@
 
 #include "FalconMCExpr.h"
 
-namespace llvm {} // end namespace llvm
+#include "llvm/MC/MCAsmLayout.h"
+#include "llvm/MC/MCAssembler.h"
+#include "llvm/MC/MCContext.h"
+#include "llvm/MC/MCStreamer.h"
+#include "llvm/MC/MCValue.h"
+
+#define DEBUG_TYPE "falconmcexpr"
+
+namespace llvm {
+
+const FalconMCExpr *FalconMCExpr::create(VariantKind Kind, const MCExpr *Expr,
+                                         MCContext &Ctx) {
+  return new (Ctx) FalconMCExpr(Kind, Expr);
+}
+
+} // end namespace llvm

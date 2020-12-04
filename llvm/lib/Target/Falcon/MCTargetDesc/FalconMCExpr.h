@@ -14,6 +14,32 @@
 
 #include "MCTargetDesc/FalconFixupKinds.h"
 
-namespace llvm {} // end namespace llvm
+namespace llvm {
+
+/// An expression in Falcon machine code.
+class FalconMCExpr : public MCTargetExpr {
+public:
+  /// Specifies the type of an expression.
+  enum VariantKind {
+    VK_Falcon_None,
+    // TODO
+  };
+
+public:
+  /// Creates an AVR machine code expression.
+  static const FalconMCExpr *create(VariantKind Kind, const MCExpr *Expr,
+                                    MCContext &Ctx);
+
+private:
+  const VariantKind Kind;
+  const MCExpr *SubExpr;
+
+  explicit FalconMCExpr(VariantKind Kind, const MCExpr *Expr)
+      : Kind(Kind), SubExpr(Expr) {}
+
+  ~FalconMCExpr() {}
+};
+
+} // end namespace llvm
 
 #endif // LLVM_TARGET_FALCON_MCEXPR_H
