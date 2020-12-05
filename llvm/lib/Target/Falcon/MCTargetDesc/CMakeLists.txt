@@ -1,3 +1,9 @@
 add_llvm_component_library(LLVMFalconDesc
-  # TODO
+  FalconAsmBackend.cpp
+  FalconELFObjectWriter.cpp
+  FalconInstPrinter.cpp
+  FalconMCAsmInfo.cpp
+  FalconMCCodeEmitter.cpp
+  FalconMCExpr.cpp
+  FalconMCTargetDesc.cpp
 )
