@@ -108,6 +108,22 @@ def IMB1 : FalconSpr<14, "imb1">, DwarfRegNum<[30]>;
 def DMB1 : FalconSpr<15, "dmb1">, DwarfRegNum<[31]>;
 
 //===----------------------------------------------------------------------===//
+//  Secure Co-Processor crypto registers
+//===----------------------------------------------------------------------===//
+
+// A 133-bit SCP crypto register.
+// The first 128 bits store the crypto data for AES operations.
+// The last 5 bits store an ACL value regulating access to the register.
+class FalconCr<bits<16> Enc, string name> : FalconReg<name> {
+  let HWEncoding = Enc;
+}
+
+// Define the 8 crypto registers.
+foreach I = 0-7 in {
+  def C#I : FalconCr<I, "c"#I>, DwarfRegNum<[32 + I]>;
+}
+
+//===----------------------------------------------------------------------===//
 // Register Classes
 //===----------------------------------------------------------------------===//
 
@@ -145,3 +161,6 @@ def SPRW : RegisterClass<"Falcon", [i32], 32, (add
   SCP,
   // Reserved/Unknown registers
   SEC1, IMB1, DMB1)>;
+
+// Allocate all the SCP crypto registers.
+def CR : RegisterClass<"Falcon", [i133], 133, (add (sequence "C%u", 0, 7))>;

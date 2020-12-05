@@ -73,6 +73,17 @@ BitVector FalconRegisterInfo::getReservedRegs(const MachineFunction &MF) const {
   Reserved.set(Falcon::IMB1);
   Reserved.set(Falcon::DMB1);
 
+  // Reserve all the Falcon crypto registers. These can only be accessed by
+  // crypto commands under special conditions and should never be allocated.
+  Reserved.set(Falcon::C0);
+  Reserved.set(Falcon::C1);
+  Reserved.set(Falcon::C2);
+  Reserved.set(Falcon::C3);
+  Reserved.set(Falcon::C4);
+  Reserved.set(Falcon::C5);
+  Reserved.set(Falcon::C6);
+  Reserved.set(Falcon::C7);
+
   return Reserved;
 }
 
