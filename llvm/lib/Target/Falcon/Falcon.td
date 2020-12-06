@@ -21,6 +21,14 @@ include "llvm/Target/Target.td"
 
 include "FalconRegisterInfo.td"
 
+//===---------------------------------------------------------------------===//
+// Instruction Descriptions
+//===---------------------------------------------------------------------===//
+
+include "FalconInstrInfo.td"
+
+def FalconInstrInfo : InstrInfo;
+
 //===----------------------------------------------------------------------===//
 // Falcon Subtarget features.
 //===----------------------------------------------------------------------===//
@@ -34,5 +42,5 @@ def FeatureScp
 //===---------------------------------------------------------------------===//
 
 def Falcon : Target {
-  // TODO
+  let InstructionSet         = FalconInstrInfo;
 }
