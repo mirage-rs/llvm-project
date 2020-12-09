@@ -94,6 +94,26 @@ class Pseudo<dag outs, dag ins, string asmstr, list<dag> pattern>
 //   N            : no operands
 //===----------------------------------------------------------------------===//
 
+/// Sized instructions which take two registers and an i8 immediate as operands.
+///
+/// This form is used for arithmetic instructions and the LD instruction.
+class FalconInstSWRI8<bits<2> size, bits<2> a, bits<4> b, dag outs,
+                      dag ins, string asmstr, list<dag> pattern>
+  : FalconInst24<outs, ins, asmstr, pattern>
+{
+  bits<4> R1;
+  bits<4> R2;
+  bits<8> I8;
+  
+  let Inst{23-16} = I8;
+  let Inst{15-12} = R1;
+  let Inst{11-8} = R2;
+
+  let Inst{7-6} = size;
+  let Inst{5-4} = a;
+  let Inst{3-0} = b;
+}
+
 /// Unsized instructions which take a 24-bit immediate as their single operand.
 ///
 /// Introduced in Falcon v4, used for long calls and long branches.
