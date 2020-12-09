@@ -11,6 +11,10 @@
 //
 //===----------------------------------------------------------------------===//
 
+//===----------------------------------------------------------------------===//
+// Basic Falcon instruction definition
+//===----------------------------------------------------------------------===//
+
 /// A generic Falcon instruction.
 class FalconInst<int size, dag outs, dag ins, string asmstr,
                  list<dag> pattern> : Instruction {
@@ -74,4 +78,31 @@ class Pseudo<dag outs, dag ins, string asmstr, list<dag> pattern>
 {
   let isPseudo = 1;
   let isCodeGenOnly = 1;
+}
+
+//===----------------------------------------------------------------------===//
+// Falcon Instruction formats
+//===----------------------------------------------------------------------===//
+//
+// The forms are named after the operands they take:
+//
+//   S            : sized form; high 2 bits of opcode select operation size
+//   R            : a read-only register operand
+//   W            : a write-only register operand
+//   M            : a read-modify-write register operand
+//   I            : an immediate operand (8-bit, 16-bit, 24-bit, 32-bit)
+//   N            : no operands
+//===----------------------------------------------------------------------===//
+
+/// Unsized instructions which take a 24-bit immediate as their single operand.
+///
+/// Introduced in Falcon v4, used for long calls and long branches.
+class FalconInstI24<bits<8> opcode, dag outs, dag ins, string asmstr,
+                    list<dag> pattern>
+  : FalconInst32<outs, ins, asmstr, pattern>
+{
+  bits<24> I24;
+
+  let Inst{7-0} = opcode;
+  let Inst{31-8} = I24;
 }
