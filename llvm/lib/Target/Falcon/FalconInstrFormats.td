@@ -58,3 +58,20 @@ class FalconInst40<dag outs, dag ins, string asmstr, list<dag> pattern>
 
   field bits<40> SoftFail = 0;
 }
+
+// A class for pseudo instructions.
+//
+// Pseudo instructions are not real Falcon instructions. The DAG
+// stores pseudo instructions which are replaced by real Falcon
+// instructions by FalconExpandPseudoInsts.cpp.
+//
+// The SCP crypto instructions (cenc, cdec, ...) are all defined
+// as pseudo instructions. In FalconExpandPseudoInsts.cpp, the
+// instruction is then replaced by the real ccmd instruction with
+// the corresponding SCP opcode.
+class Pseudo<dag outs, dag ins, string asmstr, list<dag> pattern>
+  : FalconInst32<outs, ins, asmstr, pattern>
+{
+  let isPseudo = 1;
+  let isCodeGenOnly = 1;
+}
