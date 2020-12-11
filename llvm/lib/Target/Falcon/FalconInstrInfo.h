@@ -29,6 +29,8 @@ class FalconInstrInfo : public FalconGenInstrInfo {
 public:
   explicit FalconInstrInfo();
 
+  const FalconRegisterInfo &getRegisterInfo() const { return RI; }
+
 private:
   const FalconRegisterInfo RI;
 };
