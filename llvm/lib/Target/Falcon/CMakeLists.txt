@@ -13,10 +13,33 @@ tablegen(LLVM FalconGenSubtargetInfo.inc -gen-subtarget)
 add_public_tablegen_target(FalconCommonTableGen)
 
 add_llvm_target(FalconCodeGen
-  # TODO
+  FalconAsmPrinter.cpp
+  #FalconExpandPseudoInsts.cpp
+  FalconFrameLowering.cpp
+  FalconInstrInfo.cpp
+  FalconISelDAGToDAG.cpp
+  FalconISelLowering.cpp
+  FalconMCInstLower.cpp
+  FalconRegisterInfo.cpp
+  FalconSubtarget.cpp
+  FalconTargetMachine.cpp
+
+  LINK_COMPONENTS
+  AsmPrinter
+  CodeGen
+  Core
+  MC
+  FalconDesc
+  FalconInfo
+  SelectionDAG
+  Support
+  Target
+
+  ADD_TO_COMPONENT
+  Falcon
 )
 
-#add_subdirectory(AsmParser)
+add_subdirectory(AsmParser)
 add_subdirectory(Disassembler)
 add_subdirectory(MCTargetDesc)
 add_subdirectory(TargetInfo)
