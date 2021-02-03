@@ -312,6 +312,7 @@ enum {
   EM_LANAI = 244,         // Lanai 32-bit processor
   EM_BPF = 247,           // Linux kernel bpf virtual machine
   EM_VE = 251,            // NEC SX-Aurora VE
+  EM_FALCON = 999,        // NVIDIA FAst Logic CONtroller microprocessor family
 };
 
 // Object file classes.
@@ -369,6 +370,11 @@ enum {
 // i386 relocations.
 enum {
 #include "ELFRelocs/i386.def"
+};
+
+// Falcon relocations.
+enum {
+#include "ELFRelocs/Falcon.def"
 };
 
 // ELF Relocation types for PPC32

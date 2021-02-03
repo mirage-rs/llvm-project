@@ -1,0 +1,9 @@
+
+#ifndef ELF_RELOC
+#error "ELF_RELOC must be defined"
+#endif
+
+#undef R_FALCON_NONE
+
+ELF_RELOC(R_FALCON_NONE,                0)      /* No relocation. */
+// TODO: Populate this.
